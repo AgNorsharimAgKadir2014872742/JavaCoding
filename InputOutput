@@ -1,0 +1,63 @@
+import java.util.*;
+import java.io.*;
+import java.io.IOException;
+
+public class Resume
+{
+   public static void main(String[] args)
+  {
+   BufferedReader br = null;
+    try {
+        
+    File file = new File("resume.txt");
+    
+    if (!file.exists()) {
+                file.createNewFile();
+            }
+    FileWriter fw = new FileWriter(file.getAbsoluteFile());
+    BufferedWriter out = new BufferedWriter(fw);
+    out.write("Mobile Phone: 019 7241388/n");
+    out.newLine();
+    out.write("E-mails: agnorsharim@gmail.com/n");
+    out.newLine();
+    out.write("Age: 24/n");
+    out.newLine();
+    out.write("Gender: Male/n");
+    out.newLine();
+    out.write("Matrix No: 2014872742/n");
+    out.newLine();
+    out.write("EX:     Name:Ag Norsharim bin Ag Kadirn");
+    out.newLine();
+    out.close();
+    
+  //  String sCurrentLine;
+    String check;
+    br = new BufferedReader(new FileReader("resume.txt")    );
+      List<String> tmp = new ArrayList<String>();
+           // while ((sCurrentLine = br.readLine()) != null) {
+                do{
+                   check = br.readLine();
+                   tmp.add(check);
+                   //System.out.print(check+"<br/>");
+                }while (check != null);
+                for (int i=tmp.size()-1; i>=0; i--)
+                {
+                    System.out.println(tmp.get(i)+" ");
+                }
+                //System.out.println(sCurrentLine);
+  //  } 
+    }   catch (IOException e) {
+            e.printStackTrace();
+        }finally {
+            try {
+                if (br != null)br.close();
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+        }
+   
+
+ 
+  }   
+}
+
