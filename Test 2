@@ -1,0 +1,44 @@
+import java.net.InetAddress;
+import java.net.*;
+import java.net.NetworkInterface;
+import java.net.SocketException;
+import java.net.UnknownHostException;
+
+public class ShMacIP{
+	
+   public static void main(String[] args){
+		
+	InetAddress ipv4;
+	//String ipv6;
+	try {
+			
+		ipv4 = InetAddress.getLocalHost();
+		//ipv6 = InetAddress.getLocalHost();
+		//java.net.Inet6Address.getHostAddress()
+		System.out.println("your IPv4 address : " + ipv4.getHostAddress());
+		
+		NetworkInterface network = NetworkInterface.getByInetAddress(ipv4);
+			
+		byte[] mac = network.getHardwareAddress();
+			
+		System.out.print("Your MAC address : ");
+			
+		StringBuilder sb = new StringBuilder();
+		for (int i = 0; i < mac.length; i++) {
+			sb.append(String.format("%02X%s", mac[i], (i < mac.length - 1) ? "-" : ""));		
+		}
+		System.out.println(sb.toString());
+			
+	} catch (UnknownHostException e) {
+		
+		e.printStackTrace();
+		
+	} catch (SocketException e){
+			
+		e.printStackTrace();
+			
+	}
+	    
+   }
+
+}
