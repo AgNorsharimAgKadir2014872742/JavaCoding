@@ -4,41 +4,69 @@ import java.net.NetworkInterface;
 import java.net.SocketException;
 import java.net.UnknownHostException;
 
-public class ShMacIP{
-	
-   public static void main(String[] args){
-		
-	InetAddress ipv4;
-	//String ipv6;
-	try {
-			
-		ipv4 = InetAddress.getLocalHost();
-		//ipv6 = InetAddress.getLocalHost();
-		//java.net.Inet6Address.getHostAddress()
-		System.out.println("your IPv4 address : " + ipv4.getHostAddress());
-		
-		NetworkInterface network = NetworkInterface.getByInetAddress(ipv4);
-			
-		byte[] mac = network.getHardwareAddress();
-			
-		System.out.print("Your MAC address : ");
-			
-		StringBuilder sb = new StringBuilder();
-		for (int i = 0; i < mac.length; i++) {
-			sb.append(String.format("%02X%s", mac[i], (i < mac.length - 1) ? "-" : ""));		
-		}
-		System.out.println(sb.toString());
-			
-	} catch (UnknownHostException e) {
-		
-		e.printStackTrace();
-		
-	} catch (SocketException e){
-			
-		e.printStackTrace();
-			
-	}
-	    
+public class ShMacIP
+{
+    
+   public static void main(String[] args)
+   {
+    ThreadTest mt;   
+    
+    if (args.length == 0)
+    {
+          mt = new ThreadTest ();
+        }
+      else
+      {
+          mt = new ThreadTest (args [0]);
+        }
+      mt.start ();
+    
+    InetAddress ipv4;
+    try {
+            
+       ipv4 = InetAddress.getLocalHost();
+        
+        NetworkInterface network = NetworkInterface.getByInetAddress(ipv4);
+        String hostName = ipv4.getHostName();
+        System.out.println(hostName);
+        String addr = ipv4.getHostAddress();
+        InetAddress[] alladr=ipv4.getAllByName(hostName);
+        for(int i=0; i<alladr.length; i++){
+        System.out.println(alladr[i]);}
+        byte[] mac = network.getHardwareAddress();
+            
+        System.out.print("Your MAC address : ");
+            
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < mac.length; i++) {
+            sb.append(String.format("%02X%s", mac[i], (i < mac.length - 1) ? "-" : ""));        
+        }
+        System.out.println(sb.toString());
+            
+    } catch (UnknownHostException e) {
+        
+        e.printStackTrace();
+        
+    } catch (SocketException e){
+            
+        e.printStackTrace();
+            
+    }
+        
    }
 
+}
+
+class ThreadTest extends Thread
+{
+   ThreadTest ()
+   {  }
+   ThreadTest (String name)
+   {
+      super (name); 
+   }
+   public void run ()
+   {
+      System.out.println ("Thread: " + getName ());
+   }
 }
