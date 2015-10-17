@@ -13,9 +13,6 @@ public class ShMacIP{
     try {
             
         ipv4 = InetAddress.getLocalHost();
-        //ipv6 = InetAddress.getLocalHost();
-        //java.net.Inet6Address.getHostAddress()
-        //System.out.println("your IPv4 address : " + ipv4.getHostAddress());
         
         NetworkInterface network = NetworkInterface.getByInetAddress(ipv4);
         String hostName = ipv4.getHostName();
