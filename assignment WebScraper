@@ -1,0 +1,50 @@
+import com.jaunt.*;
+import com.jaunt.util.*;
+
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.PrintStream;
+
+public class webscraper{
+
+  public static void main(String[] args)throws FileNotFoundException{
+    try{
+      //create UserAgent and content handlers.
+      UserAgent userAgent = new UserAgent();    
+      HandlerForText handlerForText = new HandlerForText();
+      HandlerForBinary handlerForBinary = new HandlerForBinary();
+      
+      File file = new File("C:/Users/norsharim.kadir/out.jepg");
+      FileOutputStream fos = new FileOutputStream(file);
+	  PrintStream ps = new PrintStream(fos);
+	  System.setOut(ps);
+      //register each handler with a specific content-type
+      userAgent.setHandler("text/css", handlerForText);
+      userAgent.setHandler("text/html", handlerForText);
+      userAgent.setHandler("text/javascript", handlerForText);
+      userAgent.setHandler("application/x-javascript", handlerForText);
+      userAgent.setHandler("image/gif", handlerForBinary);
+      userAgent.setHandler("image/jpeg", handlerForBinary);
+
+      //retrieve CSS content as String
+     /* userAgent.visit("http://fskm.uitm.edu.my/v1/fakulti/staff-directory/academic/1097.html");
+      System.out.println(handlerForText.getContent());*/
+      
+      
+      /*userAgent.visit("http://fskm.uitm.edu.my/v1/fakulti/staff-directory/academic/1097.html");
+      System.out.println(handlerForText.getContent());
+      //retrieve JS content as String
+      userAgent.visit("http://fskm.uitm.edu.my/v1/fakulti/staff-directory/academic/1097.html");
+      System.out.println(handlerForText.getContent());
+      */
+      //retrieve GIF content as byte[], and print its length
+      userAgent.visit("http://fskm.uitm.edu.my/v1/fakulti/staff-directory/academic/1097.html");
+      //System.out.println(handlerForBinary.getContent().length);  
+      System.out.println(handlerForBinary.getContent());
+    }
+    catch(JauntException j){
+      System.err.println(j);
+    }
+  }
+}
