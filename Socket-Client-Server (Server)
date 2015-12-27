@@ -1,0 +1,55 @@
+/*
+ * ITT786: Client Server Socket 
+ * Author: Ag Norsharim Bin Ag Kadir
+ * Matrix No: 2014872742
+ * Email Address: agnorsharim@gmail.com
+ * Github Account: https://github.com/AgNorsharimAgKadir2014872742
+ */
+
+import java.io.*;
+import java.net.*;
+import java.util.*;
+import java.lang.*;
+import java.net.Socket;
+
+class Server{
+	public static void main(String argv[]) throws Exception
+	{
+		String clientSentence;
+		DatagramSocket  socket = new DatagramSocket(4445);
+		
+	    byte[] buf = new byte[1024]; 
+        byte[] sen  = new byte[1024]; 
+
+		while(true) 
+        { 
+  
+          BufferedReader inFromServer = new BufferedReader(new InputStreamReader(System.in));
+
+          DatagramPacket revpacket = new DatagramPacket(buf, buf.length); 
+
+          System.out.println ("Waiting for client");
+
+          socket.receive(revpacket); 
+
+          clientSentence = new String(revpacket.getData()); 
+  	  
+		  InetAddress address = revpacket.getAddress();
+          int port = revpacket.getPort();
+  
+          System.out.println ("ClientMessage: " + clientSentence);
+		  System.out.println ("ServerMessage: ");
+          String words = inFromServer.readLine();
+		  sen = words.getBytes();
+		  
+          DatagramPacket senpacket = new DatagramPacket(sen, sen.length, address, port); 
+  
+          socket.send(senpacket); 
+		  socket.close();
+
+        } 
+
+	}
+}
+
+
