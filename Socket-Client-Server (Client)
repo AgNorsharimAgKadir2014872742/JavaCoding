@@ -6,20 +6,15 @@
  * Github Account: https://github.com/AgNorsharimAgKadir2014872742
  */
 
-import java.io.*;
-import java.net.*;
-import java.util.*;
-import java.lang.*;
-import java.net.Socket;
-
 class Client{
 	public static void main(String argv[]) throws Exception
 	{
 		int port;
 		String ipaddress;
 		Scanner scan= new Scanner(System.in);
-        byte[] sendBuf = new byte[1024];
         DatagramSocket  socket = new DatagramSocket();
+		String words = " ";
+		
 		while(true) 
         { 
           BufferedReader inFromClient = new BufferedReader(new InputStreamReader(System.in));
@@ -27,10 +22,13 @@ class Client{
 		  ipaddress = scan.nextLine();
 		  InetAddress address = InetAddress.getByName(ipaddress);
 		  
-		  byte[] sen = new byte[1024];
-		  byte[] rev = new byte[1024];
+		  byte[] sen = new byte[2048];
+		  byte[] rev = new byte[2048];
+		  while(words != "bye")
+		  {
+		  words = " ";
 		  System.out.println("ClientMessage: ");
-		  String words = inFromClient.readLine();
+		  words = inFromClient.readLine();
 		  sen = words.getBytes();
           DatagramPacket senpacket = new DatagramPacket(sen, sen.length, address, 4445);
           socket.send(senpacket);
@@ -40,9 +38,10 @@ class Client{
 	
           String received = new String(revpacket.getData());
           System.out.println("Message: " + received); 
+		 }
 		  socket.close();
 
-        } 
+        }
 
 	}
 }
